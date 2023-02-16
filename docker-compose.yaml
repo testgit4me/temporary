@@ -6,3 +6,8 @@ services:
     ports:
       - "9000:8080"
     container_name: tomcat9
+    volumes:
+      - web-apps:/usr/local/tomcat/webapps
+
+volumes:
+  aweb-apps:
