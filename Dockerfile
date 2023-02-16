@@ -1,4 +1,4 @@
-FROM tomcat:8-jre11
+FROM tomcat:9-jdk11
 LABEL "Author"="DevOps Engineer"
 EXPOSE 8080
 
