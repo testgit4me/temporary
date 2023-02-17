@@ -5,7 +5,7 @@ RUN tar -xzvf apache-tomcat-8.5.41.tar.gz
 RUN cp -rf apache-tomcat-8.5.41 /usr/local/tomcat
 RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
 RUN cd boxfuse-sample-java-war-hello && mvn package
-RUN cp target/hello-1.0.war /usr/local/tomcat/webapps/boxfuse.war
+RUN cp /boxfuse-sample-java-war-hello/target/hello-1.0.war /usr/local/tomcat/webapps/boxfuse.war
 WORKDIR /usr/local/tomcat
 EXPOSE 8080
 CMD ["bin/catalina.sh" "run"]
