@@ -1,12 +1,13 @@
-FROM alpine:latest
+FROM alpine:latest as BUILD_SERVER
 RUN apk update && apk add openjdk8 && apk add maven && apk add git
-RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
-RUN tar -xzvf apache-tomcat-8.5.41.tar.gz
-RUN cp -rf apache-tomcat-8.5.41 /usr/local/tomcat
 RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
 RUN cd boxfuse-sample-java-war-hello && mvn package
+
+FROM alpine:latest
+RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
+RUN tar -xzvf apache-tomcat-8.5.41.tar.gz && rm -rf apache-tomcat-8.5.41.tar.gz && mv apache-tomcat-8.5.41 /usr/local/tomcat 
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
-RUN cp /boxfuse-sample-java-war-hello/target/hello-1.0.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=BUILD_SERVER /boxfuse-sample-java-war-hello/target/hello-1.0.war /usr/local/tomcat/webapps/ROOT.war
 WORKDIR /usr/local/tomcat
 EXPOSE 8080
 ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]
