@@ -4,6 +4,7 @@ RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
 RUN cd boxfuse-sample-java-war-hello && mvn package
 
 FROM alpine:latest
+RUN apk update && apk add openjdk8
 RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
 RUN tar -xzvf apache-tomcat-8.5.41.tar.gz && rm -rf apache-tomcat-8.5.41.tar.gz && mv apache-tomcat-8.5.41 /usr/local/tomcat 
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
