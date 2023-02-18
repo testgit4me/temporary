@@ -33,11 +33,17 @@
       loop:
         - openjdk-8-jdk
 
+    - name: create tomcat directory
+      file: 
+        path: /usr/local/tomcat
+        state: directory
+
     - name: download tomcat
       unarchive:
         src: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
         dest: /usr/local/tomcat
         remote_src: yes
+        
 # FROM alpine:latest
 # RUN apk update && apk add openjdk8
 # RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
