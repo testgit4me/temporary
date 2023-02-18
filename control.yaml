@@ -1,0 +1,5 @@
+- name: DevOps
+  hosts: hosts
+  tasks:
+    - name: ping my hosts
+      ping:
