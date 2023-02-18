@@ -4,9 +4,13 @@
   tasks:
     - name: install packages
       apt:
-        name: openjdk-8-jdk
+        name: "{{ item }}"
         state: present
         update_cache: yes
+      loop:
+        - openjdk-8-jdk
+        - git
+        - maven
 
   # - name: fetch code
   #   git:
