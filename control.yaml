@@ -2,67 +2,65 @@
 - name: Install build server
   hosts: build
   tasks:
-    - name: install packages
-      apt:
-        name: '{{ item }}'
-        state: present
-        update_cache: yes
-      loop:
-        - openjdk-8-jdk
-        - git
-        - maven
-        - ansible
+  - name: install packages
+    apt:
+      name: '{{ item }}'
+      state: present
+      update_cache: yes
+    loop:
+      - openjdk-8-jdk
+      - git
+      - maven
+      - ansible
 
-    - name: fetch code
-      git:
-        repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-        dest: /opt/boxfuse
+  - name: fetch code
+    git:
+      repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+      dest: /opt/boxfuse
 
-    - name: mvn package
-      shell:
-        cmd: mvn package
-        chdir: /opt/boxfuse/
+  - name: mvn package
+    shell:
+      cmd: mvn package
+      chdir: /opt/boxfuse/
 
-    - name: copy private key
-      copy:
-        src: ./terraform-key.pem
-        dest: /opt/
-
-    - name: fetch artifact
-      fetch:
-        src: /opt/boxfuse/target/hello-1.0.war
-        dest: ./
-        flat: yes
+  - name: fetch artifact
+    fetch:
+      src: /opt/boxfuse/target/hello-1.0.war
+      dest: ./
+      flat: yes
 
 - name: install prod server
   hosts: prod
   tasks:
-    - name: Install tomcat
-      apt:
-        name: '{{ item }}'
-        state: present
-        update_cache: yes
-      loop:
-        - openjdk-8-jdk
-        - tomcat9
-        - tomcat9-admin
-        - tomcat9-docs
-        - tomcat9-common
+  - name: Install tomcat
+    apt:
+      name: '{{ item }}'
+      state: present
+      update_cache: yes
+    loop:
+      - openjdk-8-jdk
+      - tomcat9
+      - tomcat9-admin
+      - tomcat9-docs
+      - tomcat9-common
 
-    - name: clean ROOT folder
-      file:
-        path: /var/lib/tomcat9/webapps/ROOT
-        state: absent
+  - name: clean ROOT folder
+    file:
+      path: /var/lib/tomcat9/webapps/ROOT
+      state: absent
 
-    - name: transfer artifact to prod
-      synchronize:
-        src: ./hello-1.0.war
-        dest: /var/lib/tomcat9/webapps/ROOT.war
+  - name: transfer artifact to prod
+    synchronize:
+      src: ./hello-1.0.war
+      dest: /var/lib/tomcat9/webapps/ROOT.war
+    notify:
+      - restart tomcat9
 
-    - name: restart tomcat9
-      service:
-        name: tomcat9
-        state: restarted
+  handlers:
+  - name: restart tomcat9
+    service:
+      name: tomcat9
+      state: restarted
 
     # - name: start tomcat
     #   command: "{{ item }}"
