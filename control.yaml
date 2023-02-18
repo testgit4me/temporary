@@ -63,8 +63,8 @@
 
     - name: Get artifact from build server
       synchronize:
-        src: /opt/boxfuse/target/hello-1.0.war
-        dest: /usr/local/tomcat/webapps/ROOT.war
+        dest: /opt/boxfuse/target/hello-1.0.war
+        src: /usr/local/tomcat/webapps/ROOT.war
         # private_key: /opt/terraform-key.pem
         rsync_opts:
           - '-e ssh -i /opt/terraform-key.pem'
