@@ -2,9 +2,9 @@
   hosts: build
   tasks:
     - name: install packages
-      update_cache: yes
       apt: openjdk-8-jdk
       state: present
+      update_cache: yes
 
     - name: fetch code
       git:
