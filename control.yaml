@@ -34,7 +34,7 @@
         - openjdk-8-jdk
 
     - name: create tomcat directory
-      file: 
+      file:
         path: /usr/local/tomcat
         state: directory
 
@@ -44,13 +44,18 @@
         dest: /usr/local/tomcat
         extra_opts: [--strip-components=1]
         remote_src: yes
-    
+
     - name: Cleen ROOT folder
       file:
         path: /usr/local/tomcat/webapps/ROOT
         state: absent
-        
 
+    - name: Get artifact from build server
+      synchronize:
+        src: /opt/boxfuse/target/hello-1.0.war
+        dest: /usr/local/tomcat/webapps/ROOT.war
+        mode: push
+      delegate_to: build
 # FROM alpine:latest
 # RUN apk update && apk add openjdk8
 # RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
