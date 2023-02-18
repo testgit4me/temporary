@@ -1,6 +1,6 @@
 [servers]
 build ansible_host=172.31.5.114 
-prod ansible_host=172.31.4.221 
+prod ansible_host=172.31.6.157
 
 [servers:vars]
 ansible_user=ubuntu 

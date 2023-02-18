@@ -10,8 +10,6 @@ COPY --from=BUILD_IMAGE /boxfuse-sample-java-war-hello/target/hello-1.0.war /usr
 # docker run -it maven:3-openjdk-8 bash
 
 
-
-
 FROM alpine:latest
 RUN apk update && apk add openjdk8
 RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz

@@ -49,17 +49,17 @@
         shell: /bin/false
         create_home: /opt/tomcat
 
-    - name: clean ROOT folder
-      file:
-        path: /var/lib/tomcat9/webapps/ROOT
-        state: absent
+    # - name: clean ROOT folder
+    #   file:
+    #     path: /var/lib/tomcat9/webapps/ROOT
+    #     state: absent
 
-    - name: transfer artifact to prod
-      synchronize:
-        src: ./hello-1.0.war
-        dest: /var/lib/tomcat9/webapps/ROOT.war
-      notify:
-        - restart tomcat9
+    # - name: transfer artifact to prod
+    #   synchronize:
+    #     src: ./hello-1.0.war
+    #     dest: /var/lib/tomcat9/webapps/ROOT.war
+    #   notify:
+    #     - restart tomcat9
 
   handlers:
     - name: restart tomcat9
