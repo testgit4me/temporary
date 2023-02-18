@@ -4,4 +4,5 @@
     - name: ping my hosts
       ping:
     - name: print message
-      msg: Hello print
+      debug:
+        msg: Hello print
