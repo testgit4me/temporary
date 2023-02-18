@@ -49,15 +49,20 @@
         - tomcat9-docs
         - tomcat9-common
 
-    # - name: Cleen ROOT folder
-    #   file:
-    #     path: /usr/local/tomcat/webapps/ROOT
-    #     state: absent
+    - name: clean ROOT folder
+      file:
+        path: /var/lib/tomcat9/webapps/ROOT
+        state: absent
 
-    # - name: transfer artifact to prod
-    #   synchronize:
-    #     src: ./hello-1.0.war
-    #     dest: /usr/local/tomcat/webapps/ROOT.war
+    - name: transfer artifact to prod
+      synchronize:
+        src: ./hello-1.0.war
+        dest: /var/lib/tomcat9/webapps/ROOT.war
+
+    - name: restart tomcat9
+      service:
+        name: tomcat9
+        state: restarted
 
     # - name: start tomcat
     #   command: "{{ item }}"
