@@ -68,7 +68,7 @@
         dest: /usr/local/tomcat/webapps/ROOT.war
 
     - name: start tomcat
-      command: ./usr/local/tomcat/bin/startup.sh
+      command: /usr/local/tomcat/bin/startup.sh
 
     # - name: Get artifact from build server
     #   synchronize:
