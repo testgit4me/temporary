@@ -26,7 +26,7 @@
       copy: 
         src: ./terraform-key.pem
         dest: /opt/
-        mode:'0644'
+        
 
 # - name: install prod server
 #   hosts: prod
