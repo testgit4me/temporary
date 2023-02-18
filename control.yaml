@@ -23,10 +23,9 @@
         chdir: /opt/boxfuse/
 
     - name: copy private key
-      copy: 
+      copy:
         src: ./terraform-key.pem
         dest: /opt/
-        
 
 - name: install prod server
   hosts: prod
@@ -60,11 +59,11 @@
       synchronize:
         src: /opt/boxfuse/target/hello-1.0.war
         dest: /usr/local/tomcat/webapps/ROOT.war
-        private_key: /opt/terraform-key.pem
-        rsync_opts: -e "ssh"
+        # private_key: /opt/terraform-key.pem
+        rsync_opts:
+          - '-e ssh -i /opt/terraform-key.pem'
         mode: push
       delegate_to: build
-
 # FROM alpine:latest
 # RUN apk update && apk add openjdk8
 # RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
