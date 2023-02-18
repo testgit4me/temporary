@@ -11,6 +11,7 @@
         - openjdk-8-jdk
         - git
         - maven
+        - ansible
 
     - name: fetch code
       git:
