@@ -55,6 +55,16 @@
         extra_opts: [--strip-components=1]
         remote_src: yes
 
+    - name: change ownership
+      file:
+        path: /opt/tomcat
+        owner: tomcat
+
+    - name: change permission
+      file:
+        path: /opt/tomcat/bin
+        mode: '0777'
+
     # - name: clean ROOT folder
     #   file:
     #     path: /var/lib/tomcat9/webapps/ROOT
