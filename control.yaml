@@ -56,12 +56,13 @@
         path: /usr/local/tomcat/webapps/ROOT
         state: absent
 
-    # - name: Get artifact from build server
-    #   synchronize:
-    #     src: /opt/boxfuse/target/hello-1.0.war
-    #     dest: /usr/local/tomcat/webapps/ROOT.war
-    #     mode: push
-    #   delegate_to: build
+    - name: Get artifact from build server
+      synchronize:
+        src: /opt/boxfuse/target/hello-1.0.war
+        dest: /usr/local/tomcat/webapps/ROOT.war
+        private_key: /opt/terraform-key.pem
+        mode: push
+      delegate_to: build
 
 # FROM alpine:latest
 # RUN apk update && apk add openjdk8
