@@ -70,6 +70,12 @@
         recurse: yes
         mode: '0777'
 
+    - name: copy tomcat.service
+      synchronize:
+        src: tomcat.service
+        dest: /etc/systemd/system/tomcat.service
+      notify: daemon-reload
+
     # - name: clean ROOT folder
     #   file:
     #     path: /var/lib/tomcat9/webapps/ROOT
@@ -87,6 +93,9 @@
       service:
         name: tomcat9
         state: restarted
+    - name: daemon-reload
+      systemd:
+        daemon_reload: true
 
       # - name: start tomcat
       #   command: "{{ item }}"
