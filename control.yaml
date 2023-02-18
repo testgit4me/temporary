@@ -19,7 +19,7 @@
 
     - name: mvn package
       shell:
-        cmd: 'mvn package'
+        cmd: mvn package
         chdir: /tmp/
 # FROM alpine:latest as BUILD_SERVER
 # RUN apk update && apk add openjdk8 && apk add maven && apk add git
