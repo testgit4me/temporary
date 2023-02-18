@@ -78,17 +78,17 @@
         - daemon-reload
         - start & enable tomcat
 
-    # - name: clean ROOT folder
-    #   file:
-    #     path: /var/lib/tomcat9/webapps/ROOT
-    #     state: absent
+    - name: Clean ROOT folder
+      file:
+        path: /opt/tomcat/webapps/ROOT
+        state: absent
 
-    # - name: transfer artifact to prod
-    #   synchronize:
-    #     src: ./hello-1.0.war
-    #     dest: /var/lib/tomcat9/webapps/ROOT.war
-    #   notify:
-    #     - restart tomcat
+    - name: transfer artifact to prod
+      synchronize:
+        src: ./hello-1.0.war
+        dest: /opt/tomcat/webapps/ROOT.war
+      notify:
+        - restart tomcat
 
   handlers:
     - name: restart tomcat
@@ -106,35 +106,6 @@
       systemd:
         daemon_reload: true
 
-      # - name: start tomcat
-      #   command: "{{ item }}"
-      #   loop:
-      #     - bash /usr/local/tomcat/bin/catalina.sh
 
-      # - name: install packages
-      #   apt:
-      #     name: '{{ item }}'
-      #     state: present
-      #     update_cache: yes
-      #   loop:
-      #     - openjdk-8-jdk
 
-      # - name: create tomcat directory
-      #   file:
-      #     path: /usr/local/tomcat
-      #     state: directory
 
-      # - name: Cleen ROOT folder
-      #   file:
-      #     path: /usr/local/tomcat/webapps/ROOT
-      #     state: absent
-
-      # - name: transfer artifact to prod
-      #   synchronize:
-      #     src: ./hello-1.0.war
-      #     dest: /usr/local/tomcat/webapps/ROOT.war
-
-      # - name: start tomcat
-      #   command: "{{ item }}"
-      #   loop:
-      #     - bash /usr/local/tomcat/bin/catalina.sh
