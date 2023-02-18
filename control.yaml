@@ -1,5 +1,5 @@
 ---
-- name: Build
+- name: Install build server
   hosts: build
   tasks:
     - name: install packages
@@ -22,8 +22,8 @@
         cmd: mvn package
         chdir: /opt/boxfuse/
 
-- name: Prod
-  hosts: Prod
+- name: install prod server
+  hosts: prod
   tasks:
     - name: install packages
       apt:
