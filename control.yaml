@@ -74,7 +74,9 @@
       synchronize:
         src: tomcat.service
         dest: /etc/systemd/system/tomcat.service
-      notify: start & enable tomcat & daemon-reload
+      notify: 
+        - daemon-reload
+        - start & enable tomcat
 
     # - name: clean ROOT folder
     #   file:
@@ -94,16 +96,14 @@
         name: tomcat
         state: restarted
 
-    - name: start tomcat
+    - name: start & enable tomcat
       service:
         name: tomcat
         state: started
-
-    - name: start & enable tomcat & daemon-reload
-      systemd:
-        name: tomcat
-        state: started
         enabled: true
+
+    - name: daemon-reload
+      systemd:
         daemon_reload: true
 
       # - name: start tomcat
