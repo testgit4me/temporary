@@ -44,6 +44,11 @@
         dest: /usr/local/tomcat
         extra_opts: [--strip-components=1]
         remote_src: yes
+    
+    - name: Cleen ROOT folder
+      file:
+        path: /usr/local/tomcat/webapps/ROOT
+        state: absent
         
 
 # FROM alpine:latest
