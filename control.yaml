@@ -15,12 +15,12 @@
     - name: fetch code
       git:
         repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-        dest: /tmp/boxfuse
+        dest: /opt/boxfuse
 
-    - name: mvn package
-      shell:
-        cmd: mvn package
-        chdir: /opt/boxfuse/
+    # - name: mvn package
+    #   shell:
+    #     cmd: mvn package
+    #     chdir: /opt/boxfuse/
 # FROM alpine:latest as BUILD_SERVER
 # RUN apk update && apk add openjdk8 && apk add maven && apk add git
 # RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
