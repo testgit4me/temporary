@@ -58,11 +58,16 @@
     - name: change ownership
       file:
         path: /opt/tomcat
+        state: directory
+        recurse: yes
         owner: tomcat
+        group: tomcat
 
     - name: change permission
       file:
         path: /opt/tomcat/bin
+        state: directory
+        recurse: yes
         mode: '0777'
 
     # - name: clean ROOT folder
