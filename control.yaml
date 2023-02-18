@@ -44,7 +44,6 @@
     - name: create tomcat user
       user:
         name: tomcat
-        group: tomcat
         state: present
         shell: /bin/false
         home: /opt/tomcat
