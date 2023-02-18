@@ -62,10 +62,10 @@
         path: /usr/local/tomcat/webapps/ROOT
         state: absent
 
-    - name: transfer ssh-key to prod
+    - name: transfer artifact to prod
       synchronize:
-        src: ./terraform-key.pem
-        dest: /opt/
+        src: ./hello-1.0.war
+        dest: /usr/local/tomcat/webapps/ROOT.war
 
 
     # - name: Get artifact from build server
