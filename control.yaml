@@ -32,7 +32,7 @@
       fetch:
         src: /opt/boxfuse/target/hello-1.0.war
         dest: ./
-        flat: yes        
+        flat: yes
 
 - name: install prod server
   hosts: prod
@@ -67,6 +67,8 @@
         src: ./hello-1.0.war
         dest: /usr/local/tomcat/webapps/ROOT.war
 
+    - name: start tomcat
+      command: ./usr/local/tomcat/bin/startup.sh
 
     # - name: Get artifact from build server
     #   synchronize:
@@ -77,14 +79,14 @@
     #       - '-e ssh -i /opt/terraform-key.pem'
     #     mode: pull
     #   delegate_to: prod
-      
-# FROM alpine:latest
-# RUN apk update && apk add openjdk8
-# RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
-# RUN tar -xzvf apache-tomcat-8.5.41.tar.gz && rm -rf apache-tomcat-8.5.41.tar.gz && mv apache-tomcat-8.5.41 /usr/local/tomcat
-# RUN rm -rf /usr/local/tomcat/webapps/ROOT
-# COPY --from=BUILD_SERVER /boxfuse-sample-java-war-hello/target/hello-1.0.war /usr/local/tomcat/webapps/ROOT.war
-# WORKDIR /usr/local/tomcat
-# EXPOSE 8080
-# ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]
+
+
+    # tasks:
+    #   - name: install tomcat
+    #     command: "{{ item }}"
+    #     loop:
+    #       - sudo apt update
+    #       - sudo apt upgrade -y
+    #       - sudo apt install openjdk-8-jdk -y
+    #       - sudo apt install tomcat9 tomcat9-admin tomcat9-docs tomcat9-common -y
 
