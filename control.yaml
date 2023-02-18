@@ -1,8 +1,23 @@
 - name: DevOps
   hosts: build
   tasks:
-    - name: ping my hosts
-      ping:
-    - name: print message
-      debug:
-        msg: Hello print
+    - name: install packages
+      apt: 
+        pkg:
+        - openjdk-8-jdk
+        - maven
+        - git
+    
+    - name: fetch code
+      git:
+       repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+       dest: /tmp/boxfuse-sample-java-war-hello
+       
+
+
+
+
+FROM alpine:latest as BUILD_SERVER
+RUN apk update && apk add openjdk8 && apk add maven && apk add git
+RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+RUN cd boxfuse-sample-java-war-hello && mvn package
