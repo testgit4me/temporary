@@ -70,7 +70,7 @@
     - name: start tomcat
       command: "{{ item }}"
       loop:
-        - bash /usr/local/tomcat/bin/startup.sh
+        - bash /usr/local/tomcat/bin/catalina.sh
 
     # - name: Get artifact from build server
     #   synchronize:
