@@ -42,8 +42,10 @@
       unarchive:
         src: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
         dest: /usr/local/tomcat
+        extra_opts: [--strip-components=1]
         remote_src: yes
         
+
 # FROM alpine:latest
 # RUN apk update && apk add openjdk8
 # RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
