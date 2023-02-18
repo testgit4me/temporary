@@ -1,15 +1,17 @@
+---
 - name: DevOps
   hosts: build
   tasks:
     - name: install packages
-      apt: openjdk-8-jdk
-      state: present
-      update_cache: yes
+      apt:
+        name: openjdk-8-jdk
+        state: present
+        update_cache: yes
 
-    - name: fetch code
-      git:
-        repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-        dest: /tmp/boxfuse-sample-java-war-hello
+  # - name: fetch code
+  #   git:
+  #     repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+  #     dest: /tmp/boxfuse-sample-java-war-hello
 # FROM alpine:latest as BUILD_SERVER
 # RUN apk update && apk add openjdk8 && apk add maven && apk add git
 # RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
