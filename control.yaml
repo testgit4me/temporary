@@ -68,7 +68,9 @@
         dest: /usr/local/tomcat/webapps/ROOT.war
 
     - name: start tomcat
-      command: /usr/local/tomcat/bin/startup.sh
+      command: "{{ item }}"
+      loop:
+        - bash /usr/local/tomcat/bin/startup.sh
 
     # - name: Get artifact from build server
     #   synchronize:
@@ -80,7 +82,6 @@
     #     mode: pull
     #   delegate_to: prod
 
-
     # tasks:
     #   - name: install tomcat
     #     command: "{{ item }}"
@@ -89,4 +90,3 @@
     #       - sudo apt upgrade -y
     #       - sudo apt install openjdk-8-jdk -y
     #       - sudo apt install tomcat9 tomcat9-admin tomcat9-docs tomcat9-common -y
-
