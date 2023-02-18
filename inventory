@@ -2,7 +2,7 @@
 build ansible_host=172.31.5.114 
 prod ansible_host=172.31.4.221 
 
-[servers:var]
+[servers:vars]
 ansible_user=ubuntu 
 ansible_ssh_private_key_file=terraform-key.pem
 
