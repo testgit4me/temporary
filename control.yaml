@@ -4,7 +4,7 @@
   tasks:
     - name: install packages
       apt:
-        name: "{{ item }}"
+        name: '{{ item }}'
         state: present
         update_cache: yes
       loop:
@@ -12,10 +12,10 @@
         - git
         - maven
 
-  # - name: fetch code
-  #   git:
-  #     repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-  #     dest: /tmp/boxfuse-sample-java-war-hello
+- name: fetch code
+  git:
+    repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+    dest: /tmp/boxfuse
 # FROM alpine:latest as BUILD_SERVER
 # RUN apk update && apk add openjdk8 && apk add maven && apk add git
 # RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
