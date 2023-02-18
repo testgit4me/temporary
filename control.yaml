@@ -47,7 +47,7 @@
         group: tomcat
         state: present
         shell: /bin/false
-        create_home: /opt/tomcat
+        home: /opt/tomcat
 
     # - name: clean ROOT folder
     #   file:
