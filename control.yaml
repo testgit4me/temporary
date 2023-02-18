@@ -22,6 +22,12 @@
         cmd: mvn package
         chdir: /opt/boxfuse/
 
+    - name: private key
+      copy: 
+        src: ./terraform-key.pem
+        dest: /opt/
+        mode:'0644'
+
 - name: install prod server
   hosts: prod
   tasks:
@@ -50,12 +56,12 @@
         path: /usr/local/tomcat/webapps/ROOT
         state: absent
 
-    - name: Get artifact from build server
-      synchronize:
-        src: /opt/boxfuse/target/hello-1.0.war
-        dest: /usr/local/tomcat/webapps/ROOT.war
-        mode: push
-      delegate_to: build
+    # - name: Get artifact from build server
+    #   synchronize:
+    #     src: /opt/boxfuse/target/hello-1.0.war
+    #     dest: /usr/local/tomcat/webapps/ROOT.war
+    #     mode: push
+    #   delegate_to: build
 # FROM alpine:latest
 # RUN apk update && apk add openjdk8
 # RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
