@@ -1,122 +1,108 @@
 ---
-- name: Install build server
+- name: INSTALL BUILD SERVER
   hosts: build
   tasks:
-  - name: install packages
-    apt:
-      name: '{{ item }}'
-      state: present
-      update_cache: yes
-    loop:
-      - openjdk-8-jdk
-      - git
-      - maven
-      - ansible
+    - name: install packages
+      apt:
+        name: '{{ item }}'
+        state: present
+        update_cache: yes
+      loop:
+        - openjdk-8-jdk
+        - git
+        - maven
 
-  - name: fetch code
-    git:
-      repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-      dest: /opt/boxfuse
+    - name: fetch code
+      git:
+        repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+        dest: /opt/boxfuse
 
-  - name: mvn package
-    shell:
-      cmd: mvn package
-      chdir: /opt/boxfuse/
+    - name: mvn package
+      shell:
+        cmd: mvn package
+        chdir: /opt/boxfuse/
 
-  - name: fetch artifact
-    fetch:
-      src: /opt/boxfuse/target/hello-1.0.war
-      dest: ./
-      flat: yes
+    - name: fetch artifact
+      fetch:
+        src: /opt/boxfuse/target/hello-1.0.war
+        dest: ./
+        flat: yes
 
-- name: install prod server
+- name: INSTALL PROD
   hosts: prod
   tasks:
-  - name: Install tomcat
-    apt:
-      name: '{{ item }}'
-      state: present
-      update_cache: yes
-    loop:
-      - openjdk-8-jdk
-      - tomcat9
-      - tomcat9-admin
-      - tomcat9-docs
-      - tomcat9-common
+    - name: Install tomcat
+      apt:
+        name: '{{ item }}'
+        state: present
+        update_cache: yes
+      loop:
+        - openjdk-11-jdk
+        - wget
+        - tar
 
-  - name: clean ROOT folder
-    file:
-      path: /var/lib/tomcat9/webapps/ROOT
-      state: absent
+    - name: create tomcat user
+      user:
+        name: tomcat
+        group: tomcat
+        state: present
+        shell: /bin/false
+        create_home: /opt/tomcat
 
-  - name: transfer artifact to prod
-    synchronize:
-      src: ./hello-1.0.war
-      dest: /var/lib/tomcat9/webapps/ROOT.war
-    notify:
-      - restart tomcat9
+    - name: clean ROOT folder
+      file:
+        path: /var/lib/tomcat9/webapps/ROOT
+        state: absent
+
+    - name: transfer artifact to prod
+      synchronize:
+        src: ./hello-1.0.war
+        dest: /var/lib/tomcat9/webapps/ROOT.war
+      notify:
+        - restart tomcat9
 
   handlers:
-  - name: restart tomcat9
-    service:
-      name: tomcat9
-      state: restarted
+    - name: restart tomcat9
+      service:
+        name: tomcat9
+        state: restarted
 
-    # - name: start tomcat
-    #   command: "{{ item }}"
-    #   loop:
-    #     - bash /usr/local/tomcat/bin/catalina.sh
+      # - name: start tomcat
+      #   command: "{{ item }}"
+      #   loop:
+      #     - bash /usr/local/tomcat/bin/catalina.sh
 
-    # - name: install packages
-    #   apt:
-    #     name: '{{ item }}'
-    #     state: present
-    #     update_cache: yes
-    #   loop:
-    #     - openjdk-8-jdk
+      # - name: install packages
+      #   apt:
+      #     name: '{{ item }}'
+      #     state: present
+      #     update_cache: yes
+      #   loop:
+      #     - openjdk-8-jdk
 
-    # - name: create tomcat directory
-    #   file:
-    #     path: /usr/local/tomcat
-    #     state: directory
+      # - name: create tomcat directory
+      #   file:
+      #     path: /usr/local/tomcat
+      #     state: directory
 
-    # - name: download tomcat
-    #   unarchive:
-    #     src: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
-    #     dest: /usr/local/tomcat
-    #     extra_opts: [--strip-components=1]
-    #     remote_src: yes
+      # - name: download tomcat
+      #   unarchive:
+      #     src: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
+      #     dest: /usr/local/tomcat
+      #     extra_opts: [--strip-components=1]
+      #     remote_src: yes
 
-    # - name: Cleen ROOT folder
-    #   file:
-    #     path: /usr/local/tomcat/webapps/ROOT
-    #     state: absent
+      # - name: Cleen ROOT folder
+      #   file:
+      #     path: /usr/local/tomcat/webapps/ROOT
+      #     state: absent
 
-    # - name: transfer artifact to prod
-    #   synchronize:
-    #     src: ./hello-1.0.war
-    #     dest: /usr/local/tomcat/webapps/ROOT.war
+      # - name: transfer artifact to prod
+      #   synchronize:
+      #     src: ./hello-1.0.war
+      #     dest: /usr/local/tomcat/webapps/ROOT.war
 
-    # - name: start tomcat
-    #   command: "{{ item }}"
-    #   loop:
-    #     - bash /usr/local/tomcat/bin/catalina.sh
-
-    # - name: Get artifact from build server
-    #   synchronize:
-    #     dest: /opt/boxfuse/target/hello-1.0.war
-    #     src: /usr/local/tomcat/webapps/ROOT.war
-    #     # private_key: /opt/terraform-key.pem
-    #     rsync_opts:
-    #       - '-e ssh -i /opt/terraform-key.pem'
-    #     mode: pull
-    #   delegate_to: prod
-
-    # tasks:
-    #   - name: install tomcat
-    #     command: "{{ item }}"
-    #     loop:
-    #       - sudo apt update
-    #       - sudo apt upgrade -y
-    #       - sudo apt install openjdk-8-jdk -y
-    #       - sudo apt install tomcat9 tomcat9-admin tomcat9-docs tomcat9-common -y
+      # - name: start tomcat
+      #   command: "{{ item }}"
+      #   loop:
+      #     - bash /usr/local/tomcat/bin/catalina.sh
